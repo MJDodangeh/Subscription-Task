@@ -16,7 +16,7 @@ class Scheduler():
         if customer.credit >= subscription.price and subscription.isactive == True:
             Invoice.objects.create(customer=customer, amount=subscription.price,
                                    start_time=timezone.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                   end_time=(timezone.now() + timedelta(seconds=10)).strftime("%Y-%m-%d %H:%M:%S"))
+                                   end_time=(timezone.now() + timedelta(minutes=10)).strftime("%Y-%m-%d %H:%M:%S"))
             customer.credit = customer.credit - subscription.price
             customer.save()
         else:
@@ -24,7 +24,7 @@ class Scheduler():
 
     @classmethod
     def addjob(self, subid):
-        self.scheduler.add_job(lambda: self.CreateInvoice(subid), 'interval', seconds=30, id=str(subid))
+        self.scheduler.add_job(lambda: self.CreateInvoice(subid), 'interval', minutes=10, id=str(subid))
 
     @classmethod
     def resumejob(self, subid):

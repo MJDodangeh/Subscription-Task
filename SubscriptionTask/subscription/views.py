@@ -19,7 +19,10 @@ class CreateSubscription(APIView):
 
 class EditActivation(APIView):
     def put(self,request,pk):
-        subscription = Subscription.objects.get(id = pk)
+        try:
+            subscription = Subscription.objects.get(id = pk)
+        except:
+            return Response({"detail": "The Subscription Id is incorrect"},status=status.HTTP_400_BAD_REQUEST)
         serializer = SubscriptionEditActivationSerializer(data=request.data)
         if serializer.is_valid():
             if subscription.customer == request.user:
