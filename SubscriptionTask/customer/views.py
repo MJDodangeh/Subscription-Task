@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
+from invoice.schedulers import Scheduler
+from subscription.models import Subscription
 from .models import Customer
 from .serializer import CustomerSerializer,IncreaseCreditCustomerSerializer
 
@@ -26,5 +28,9 @@ class IncreaseCredit(APIView):
         if serializer.is_valid():
             customer.credit += request.data.get("credit")
             customer.save()
+            subs = Subscription.objects.filter(customer=customer)
+            for s in subs:
+                if s.price <= customer.credit:
+                    Scheduler.resumejob(s.id)
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
