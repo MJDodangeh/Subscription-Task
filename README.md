@@ -3,7 +3,7 @@
 Installation and run:
 1- clone repository :
 git clone https://github.com/MJDodangeh/Subscription-Task.git
-Then enter the car traffic management folder and open cmd
+Then enter the Subscription-Task folder and open cmd
 2- create and activate virtualenv:
 py -m virtualenv venv
 .\venv\Scripts\activate
