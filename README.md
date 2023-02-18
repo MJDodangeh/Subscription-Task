@@ -1,18 +1,24 @@
 # Subscription-Task
 
 Installation and run:
+
 1- clone repository :
 git clone https://github.com/MJDodangeh/Subscription-Task.git
 Then enter the Subscription-Task folder and open cmd
+
 2- create and activate virtualenv:
 py -m virtualenv venv
 .\venv\Scripts\activate
+
 3- install packages:
 pip install -r requirement.txt
+
 4- Initialize database :
 python manage.py makemigrations
+
 5- migrate the database :
 python manage.py migrate
+
 6- run the application:
 python manage.py runserver
 
