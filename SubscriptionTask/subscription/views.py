@@ -22,9 +22,17 @@ class EditActivation(APIView):
         subscription = Subscription.objects.get(id = pk)
         serializer = SubscriptionEditActivationSerializer(data=request.data)
         if serializer.is_valid():
-            subscription.isactive = request.data.get('isactive')
-            subscription.save()
-            if subscription.isactive == True:
-                Scheduler.resumejob(pk)
-            return Response(serializer.data,status=status.HTTP_200_OK)
+            if subscription.customer == request.user:
+                subscription.isactive = request.data.get('isactive')
+                subscription.save()
+                if subscription.isactive == True:
+                    Scheduler.resumejob(pk)
+                return Response(serializer.data,status=status.HTTP_200_OK)
+            return Response({"detail":"This Subscription Id does not belong to you"},status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SubscriptionList(APIView):
+    def get(self,request):
+        subscriptions = Subscription.objects.filter(customer=request.user)
+        serializer = SubscriptionSerializer(subscriptions,many=True)
+        return Response({"subscriptions":serializer.data}, status=status.HTTP_200_OK)
