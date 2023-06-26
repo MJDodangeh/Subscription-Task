@@ -31,3 +31,6 @@ Paying attention to the games that have a subscription, create an invoice for th
 See his subscription and invoices.
 Finally, the user should be able to get statistics from the system, how many have been invoiced and how much
 has spent in the system.
+
+Read the ProjectReport.pdf for further explanation
+https://github.com/MJDodangeh/Subscription-Task/blob/main/ProjectReport.pdf
